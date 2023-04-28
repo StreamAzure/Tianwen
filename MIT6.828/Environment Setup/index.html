@@ -748,34 +748,32 @@
 </ol>
 <h2 id="2-qemu">2. QEMU安装</h2>
 <p>课程提供了它定制的QEMU版本，并且强烈建议安装这一版QEMU而不是通过包管理器安装的QEMU。</p>
-<ol>
-<li>下载课程提供的定制版QEMU源码
+<p>1.下载课程提供的定制版QEMU源码
    <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mit-pdos/6.828-qemu.git<span class="w"> </span>qemu
-</code></pre></div></li>
-<li>安装Python2.7（自带的太新了安装程序不认……）及一系列依赖库
+</code></pre></div>
+2.安装Python2.7（自带的太新了安装程序不认……）及一系列依赖库
    <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>python2.7<span class="w"> </span><span class="o">&amp;&amp;</span>
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libsdl1.2-dev<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libtool-bin<span class="w"> </span><span class="o">&amp;&amp;</span>
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libglib2.0-dev<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libz-dev<span class="w"> </span><span class="o">&amp;&amp;</span>
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libpixman-1-dev<span class="w"> </span>
-</code></pre></div></li>
-<li>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>qemu<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./configure<span class="w"> </span>--disable-kvm<span class="w"> </span>--disable-werror<span class="w"> </span>--target-list<span class="o">=</span><span class="s2">&quot;i386-softmmu x86_64-softmmu&quot;</span><span class="w"> </span>--python<span class="o">=</span>/usr/bin/python2.7<span class="w"> </span>--prefix<span class="o">=</span><span class="nv">$HOME</span>/MIT6.828Lab/qemu
+</code></pre></div>
+3.配置安装目录
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>qemu<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./configure<span class="w"> </span>--disable-kvm<span class="w"> </span>--disable-werror<span class="w"> </span>--target-list<span class="o">=</span><span class="s2">&quot;i386-softmmu x86_64-softmmu&quot;</span><span class="w"> </span>--python<span class="o">=</span>/usr/bin/python2.7<span class="w"> </span>--prefix<span class="o">=</span><span class="nv">$HOME</span>/MIT6.828Lab/qemu
 <span class="c1">#默认将qemu安装到/usr/local目录下</span>
 <span class="c1">#如果需要修改安装目录，在命令里加 --prefix=安装路径 即可</span>
 </code></pre></div>
-</li>
-<li>找到文件<code>qemu/qga/commands-posix.c</code>，在文件前面增加一行<code>#include &lt;sys/sysmacros.h&gt;</code>，保存<blockquote>
-<p>如果不执行这一步，可能会报错“undefined reference to 'major' ”</p>
-</blockquote>
-</li>
-<li>
+4.找到文件<code>qemu/qga/commands-posix.c</code>，在文件前面增加一行<code>#include &lt;sys/sysmacros.h&gt;</code>，保存</p>
+<details class="warning" open="open">
+<summary>Warning</summary>
+<p>如果不执行这一步，可能会报错: undefined reference to 'major'</p>
+</details>
+<p>5.编译安装
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>make<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 <span class="c1">#一定要有sudo，否则会出现权限不足报错</span>
 </code></pre></div>
-</li>
-<li>检查QEMU是否安装成功
+6.检查QEMU是否安装成功
    <div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/usr/local/bin<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>qemu<span class="w"> </span><span class="c1"># 这里假设qemu安装在默认位置</span>
 <span class="c1"># 应显示以下结果，其中qemu-system-i386就是我们需要的</span>
 qemu-ga
@@ -784,8 +782,7 @@ qemu-io
 qemu-nbd
 qemu-system-i386
 qemu-system-x86_64
-</code></pre></div></li>
-</ol>
+</code></pre></div></p>
 
 
 
