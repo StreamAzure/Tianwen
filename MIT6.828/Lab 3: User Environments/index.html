@@ -12,7 +12,7 @@
         <link rel="prev" href="../Lab%202%3A%20Memory%20Management/">
       
       
-        <link rel="next" href="../../MIT6.824/%E8%AF%BE%E7%A8%8B%E7%AE%80%E4%BB%8B/">
+        <link rel="next" href="../../CS149/%E8%AF%BE%E7%A8%8B%E7%AE%80%E4%BB%8B/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
@@ -312,7 +312,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../CMU15-213/"第七章 链接.md"" class="md-nav__link">
+      <a href="../../CMU15-213/%E7%AC%AC%E4%B8%83%E7%AB%A0%20%E9%93%BE%E6%8E%A5/" class="md-nav__link">
         第七章 链接
       </a>
     </li>
@@ -570,6 +570,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#part-b-page-faults-breakpoints-exceptions-and-system-calls" class="md-nav__link">
+    Part B: Page Faults, Breakpoints Exceptions, and System Calls
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -610,14 +617,14 @@
       
       
         <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-          CMU 15-418 并行计算机体系结构和编程
+          Stanford CS149 并行计算
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          CMU 15-418 并行计算机体系结构和编程
+          Stanford CS149 并行计算
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -627,8 +634,22 @@
   
   
     <li class="md-nav__item">
-      <a href="../../CMU15-418/课程简介.md" class="md-nav__link">
+      <a href="../../CS149/%E8%AF%BE%E7%A8%8B%E7%AE%80%E4%BB%8B/" class="md-nav__link">
         课程简介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CS149/Note/" class="md-nav__link">
+        Notes
       </a>
     </li>
   
@@ -796,6 +817,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-b-page-faults-breakpoints-exceptions-and-system-calls" class="md-nav__link">
+    Part B: Page Faults, Breakpoints Exceptions, and System Calls
+  </a>
   
 </li>
       
@@ -1107,7 +1135,7 @@ Breakpoint<span class="w"> </span><span class="m">1</span>,<span class="w"> </sp
 <p>只有当中断发生导致从用户态切换到内核态时，才需要切换栈。如果发生了嵌套中断，则第二次中断发生时处理器已经位于内核态，则需要保存的程序上下文会被继续压栈。这样，当处理器处理完第二次中断时，只需要简单地弹出栈中数据就可以回到第一次中断的处理程序继续执行。</p>
 <p>然而，如果栈空间不足，不能继续将数据压栈，则处理器无法回到原来状态，会自动重启。</p>
 <p>现在，我们需要实现 JOS 中向量号 0 到 31 （内部异常）的异常捕获。在这部分我们暂时不具体定义异常处理函数，所以仅仅是捕获而非处理.</p>
-<p><img alt="这里写图片描述" src="https://img-blog.csdn.net/20160528180846203" /></p>
+<p><img alt="img" src="../images/20160528180846203.png" /></p>
 <p><code>kern/trap.c</code>的<code>trap_init()</code>函数负责初始化 IDT。每一个中断/异常的对应处理函数定义在<code>trapentry.S</code>中。对于每一个处理函数，需要先在栈上构建一个 Trapframe 结构体（即保存原程序的上下文信息，声明在<code>inc/trap.h</code>中），然后以该 Trapframe 的地址为参数，调用<code>kern/trap.c</code>中的<code>trap()</code>函数。<code>trap()</code>会负责具体处理中断/异常。</p>
 <h3 id="3">3. 实现异常捕获</h3>
 <hr />
@@ -1326,6 +1354,7 @@ Part A score: 30/30
 <p><code>obj/user/softint.asm</code>可以看到，该程序试图直接通过<code>int $14</code>来引发 trap 14（缺页异常）。但在练习 4 的设置中，trap 14的描述符特权级为 0，即只有内核程序才被允许执行<code>int $14</code>以访问该描述符。<code>softint</code>作为用户程序，运行在用户态，却尝试执行特权指令，这本身就应触发异常，因此<code>softint</code>运行时实际引发的是 trap 13.</p>
 </li>
 </ol>
+<h2 id="part-b-page-faults-breakpoints-exceptions-and-system-calls">Part B: Page Faults, Breakpoints Exceptions, and System Calls</h2>
 
 
 
