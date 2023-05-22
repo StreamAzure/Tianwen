@@ -19,7 +19,7 @@
     
     
       
-        <title>Lab2 bombLab - 天问之路</title>
+        <title>Lab2： BombLab - 天问之路</title>
       
     
     
@@ -143,7 +143,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lab2 bombLab
+              Lab2： BombLab
             
           </span>
         </div>
@@ -372,12 +372,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Lab2 bombLab
+          Lab2： BombLab
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Lab2 bombLab
+        Lab2： BombLab
       </a>
       
         
@@ -444,6 +444,26 @@
   <a href="#phase-3" class="md-nav__link">
     Phase 3
   </a>
+  
+    <nav class="md-nav" aria-label="Phase 3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    解析过程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    源码还原
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -893,6 +913,26 @@
     Phase 3
   </a>
   
+    <nav class="md-nav" aria-label="Phase 3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    解析过程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    源码还原
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -910,7 +950,7 @@
                   
 
 
-  <h1>Lab2 bombLab</h1>
+  <h1>Lab2： BombLab</h1>
 
 <p>查看所有寄存器：layout regs</p>
 <p>调试过程显示汇编代码：display /i $pc</p>
@@ -999,22 +1039,22 @@ Breakpoint<span class="w"> </span><span class="m">1</span>,<span class="w"> </sp
 </code></pre></div>
 <p>这里要求<code>(%rsp)</code>要等于 1，这应该是六个数字的其中一个，但还不能确定第几个数字会写入<code>(%rsp)</code>。</p>
 <p>如果躲过这次爆炸，会跳转到<code>400f30</code>处：</p>
-<div class="highlight"><pre><span></span><code><span class="err">400</span><span class="nl">f30:</span><span class="w"> </span><span class="err">48</span><span class="w"> </span><span class="err">8</span><span class="nf">d</span><span class="w"> </span><span class="mi">5</span><span class="no">c</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="mi">04</span><span class="w">          </span><span class="no">lea</span><span class="w">    </span><span class="mi">0x4</span><span class="p">(</span><span class="nv">%rsp</span><span class="p">),</span><span class="nv">%rbx</span><span class="w"> </span><span class="c1">;rbx=rsp+4</span>
-<span class="err">400</span><span class="nl">f35:</span><span class="w"> </span><span class="err">48</span><span class="w"> </span><span class="err">8</span><span class="nf">d</span><span class="w"> </span><span class="mi">6</span><span class="no">c</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="mi">18</span><span class="w">          </span><span class="no">lea</span><span class="w">    </span><span class="mi">0x18</span><span class="p">(</span><span class="nv">%rsp</span><span class="p">),</span><span class="nv">%rbp</span><span class="w"> </span><span class="c1">;rbp=rsp+24</span>
+<div class="highlight"><pre><span></span><code>400f30: 48 8d 5c 24 04          lea    0x4(%rsp),%rbx ;rbx=rsp+4
+400f35: 48 8d 6c 24 18          lea    0x18(%rsp),%rbp ;rbp=rsp+24
 </code></pre></div>
 <p>修改完之后回到<code>400f17</code>处：</p>
-<div class="highlight"><pre><span></span><code><span class="err">400</span><span class="nl">f17:</span><span class="w"> </span><span class="err">8</span><span class="nf">b</span><span class="w"> </span><span class="mi">43</span><span class="w"> </span><span class="no">fc</span><span class="w">                </span><span class="no">mov</span><span class="w">    </span><span class="mi">-0</span><span class="no">x4</span><span class="p">(</span><span class="nv">%rbx</span><span class="p">),</span><span class="nv">%eax</span><span class="w"> </span>
-<span class="c1">; 将%rbx寄存器的值-4，并视为一个地址（其实是%rsp），从中读取数据赋给%eax。等价于mov (%rsp),%eax</span>
-<span class="c1">; 注意，上面的-4操作并没有实际修改%rbx的值，rbx仍然是rsp+4</span>
-<span class="err">400</span><span class="nl">f1a:</span><span class="w"> </span><span class="err">01</span><span class="w"> </span><span class="nf">c0</span><span class="w">                   </span><span class="no">add</span><span class="w">    </span><span class="nv">%eax</span><span class="p">,</span><span class="nv">%eax</span><span class="w"> </span><span class="c1">; %eax*2</span>
-<span class="err">400</span><span class="nl">f1c:</span><span class="w"> </span><span class="err">39</span><span class="w"> </span><span class="err">03</span><span class="w">                   </span><span class="nf">cmp</span><span class="w">    </span><span class="nv">%eax</span><span class="p">,(</span><span class="nv">%rbx</span><span class="p">)</span>
-<span class="err">400</span><span class="nl">f1e:</span><span class="w"> </span><span class="err">74</span><span class="w"> </span><span class="err">05</span><span class="w">                   </span><span class="nf">je</span><span class="w">     </span><span class="mh">400f25</span> <span class="p">&lt;</span><span class="no">phase_2</span><span class="p">+</span><span class="mi">0x29</span><span class="p">&gt;</span><span class="w"> </span><span class="c1">;如果%eax不等于(%rbx)，爆炸</span>
+<div class="highlight"><pre><span></span><code>400f17: 8b 43 fc                mov    -0x4(%rbx),%eax 
+; 将%rbx寄存器的值-4，并视为一个地址（其实是%rsp），从中读取数据赋给%eax。等价于mov (%rsp),%eax
+; 注意，上面的-4操作并没有实际修改%rbx的值，rbx仍然是rsp+4
+400f1a: 01 c0                   add    %eax,%eax ; %eax*2
+400f1c: 39 03                   cmp    %eax,(%rbx)
+400f1e: 74 05                   je     400f25 &lt;phase_2+0x29&gt; ;如果%eax不等于(%rbx)，爆炸
 </code></pre></div>
 <p>这段代码总体的意图是，要求<code>(%rsp)</code>的2倍等于<code>(%rbx)</code>。前面可知<code>(%rsp)</code>为1，则<code>(%rbx)</code>需要为2。注意到<code>%rbx</code>恰为<code>%rsp+4</code>，即上述两个整数 1 和 2 的存储地址实际上是相邻的。</p>
 <p>如果躲过这次爆炸，会跳转至<code>400f25</code>处：</p>
-<div class="highlight"><pre><span></span><code><span class="err">400</span><span class="nl">f25:</span><span class="w"> </span><span class="err">48</span><span class="w"> </span><span class="err">83</span><span class="w"> </span><span class="nf">c3</span><span class="w"> </span><span class="mi">04</span><span class="w">             </span><span class="no">add</span><span class="w">    </span><span class="no">$0x4</span><span class="p">,</span><span class="nv">%rbx</span><span class="w"> </span><span class="c1">; rbx=rsp+8</span>
-<span class="err">400</span><span class="nl">f29:</span><span class="w"> </span><span class="err">48</span><span class="w"> </span><span class="err">39</span><span class="w"> </span><span class="nf">eb</span><span class="w">                </span><span class="no">cmp</span><span class="w">    </span><span class="nv">%rbp</span><span class="p">,</span><span class="nv">%rbx</span><span class="w"> </span><span class="c1">; rbp=rsp+24</span>
-<span class="err">400</span><span class="nl">f2c:</span><span class="w"> </span><span class="err">75</span><span class="w"> </span><span class="nf">e9</span><span class="w">                   </span><span class="no">jne</span><span class="w">    </span><span class="mh">400f17</span> <span class="p">&lt;</span><span class="no">phase_2</span><span class="p">+</span><span class="mi">0x1b</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code>400f25: 48 83 c3 04             add    $0x4,%rbx ; rbx=rsp+8
+400f29: 48 39 eb                cmp    %rbp,%rbx ; rbp=rsp+24
+400f2c: 75 e9                   jne    400f17 &lt;phase_2+0x1b&gt;
 </code></pre></div>
 <p>这里可以看出来，<code>400f17</code>和<code>400f25</code>两处的代码共同构成了一个<code>for</code>循环，在这个循环中，<code>%rbx</code>的初始值为<code>%rsp+4</code>，并在循环末尾递增<code>4</code>，直到<code>%rbx == %rsp+24</code>时结束。即相当于以下 C 语言代码：</p>
 <div class="highlight"><pre><span></span><code><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// (%rsp)为1</span>
@@ -1045,6 +1085,160 @@ Breakpoint<span class="w"> </span><span class="m">1</span>,<span class="w"> </sp
 </code></pre></div>
 <p>可以看到我们的输入被依次存放在了内存地址<code>%rsp</code>、<code>%rsp+4</code>、<code>%rsp+8</code>……<code>%rsp+20</code>处。</p>
 <h2 id="phase-3">Phase 3</h2>
+<h3 id="_4">解析过程</h3>
+<p>先看爆炸条件：</p>
+<div class="highlight"><pre><span></span><code>0000000000400f43 &lt;phase_3&gt;:
+  ...
+  400f47:   48 8d 4c 24 0c          lea    0xc(%rsp),%rcx ;rcx=rsp+12
+  400f4c:   48 8d 54 24 08          lea    0x8(%rsp),%rdx ;rdx=rsp+8
+  400f5b:   e8 90 fc ff ff          call   400bf0 &lt;__isoc99_sscanf@plt&gt;
+  400f60:   83 f8 01                cmp    $0x1,%eax
+  400f63:   7f 05                   jg     400f6a &lt;phase_3+0x27&gt;
+  400f65:   e8 d0 04 00 00          call   40143a &lt;explode_bomb&gt;
+  ; 如果sscanf赋值的字段数&lt;=1，爆炸
+  400f6a:   83 7c 24 08 07          cmpl   $0x7,0x8(%rsp)
+  400f6f:   77 3c                   ja     400fad &lt;phase_3+0x6a&gt;
+  ; 如果0x8(%rsp)&gt;7（仅比较低4字节），爆炸
+  ...
+  400fad:   e8 88 04 00 00          call   40143a &lt;explode_bomb&gt;
+  ...
+  400fbe:   3b 44 24 0c             cmp    0xc(%rsp),%eax
+  400fc2:   74 05                   je     400fc9 &lt;phase_3+0x86&gt;
+  400fc4:   e8 71 04 00 00          call   40143a &lt;explode_bomb&gt;
+  ; 如果eax≠(rsp+12)，爆炸
+  ...
+</code></pre></div>
+<p>前 6 条指令是我们在 Phase 2 中打过交道的<code>sscanf</code>，查看<code>.rodata</code>段的<code>0x4025cf</code>处的字符串就能确定输入的格式是什么：</p>
+<div class="highlight"><pre><span></span><code>4025c0 702e0025 64202564 20256420 25642025  p..%d %d %d %d %  
+4025d0 64202564 00457272 6f723a20 5072656d  d %d.Error: Prem
+# 最后的百分号才是字符串的起始字符
+</code></pre></div>
+<p>这样就确定了输入字符串的格式是<code>"%d %d"</code>，又因为<code>sscanf</code>的返回值≤1就爆炸，所以可以确定要输入的就是 2 个<code>int</code>整数。并且这两个整数会被依次保存到<code>rsp+8</code>和<code>rsp+12</code>。</p>
+<p>那么<code>cmpl $0x7,0x8(%rsp)</code>的含义也一并明确了：如果输入的<u>第一个整数</u>的低4字节＞7，爆炸。（结合下面的分析还可以知道，这里其实是为了限制<code>switch</code>跳转表下标的取值，因为总共只有 8 个分支）</p>
+<p>另外注意到<code>phase_3</code>中有连续的 8 组指令具有相似的结构（都是一条<code>mov</code>和一条<code>jmp</code>），这其实是<code>switch</code>的特征。那么一共 8 个<code>case</code>，每一个都是为<code>%eax</code> 赋值后再与我们输入的<u>第二个整数</u>比较（<code>400fbe</code>处的代码）若不相等则爆炸。换句话说，只要确定哪个<code>case</code>会被执行，就能确定第二个整数的值。</p>
+<p>如何确定呢？在这 8 组指令之前，还有两行未分析的代码：</p>
+<div class="highlight"><pre><span></span><code>400f71: 8b 44 24 08             mov    0x8(%rsp),%eax ;将第一个数保存到eax
+400f75: ff 24 c5 70 24 40 00    jmp    *0x402470(,%rax,8) ;跳转到(0x402470+8*%rax)处
+</code></pre></div>
+<p>这里的<code>jmp</code>特征就比较明显了，其实就是利用<code>switch</code>跳转表进行跳转。跳转表位于<code>0x402470</code>处，而<code>%rax</code>，也就是我们输入的第一个整数，将作为跳转表的下标（补充：跳转表实际上是一个指针数组，而指针大小为 8 字节，所以这里要写<code>8*%rax</code>作为地址偏移量）。</p>
+<p>跳转表也保存在<code>.rodata</code>段，所以查看<code>0x402470</code>处的字符串：</p>
+<div class="highlight"><pre><span></span><code>402470 7c0f4000 00000000 b90f4000 00000000  |.@.......@.....
+402480 830f4000 00000000 8a0f4000 00000000  ..@.......@.....
+402490 910f4000 00000000 980f4000 00000000  ..@.......@.....
+4024a0 9f0f4000 00000000 a60f4000 00000000  ..@.......@.....
+</code></pre></div>
+<p>这里有每个下标所对应的跳转地址，且可以看出来是用小端法保存的，如<code>7c0f4000</code>其实是地址<code>400f7c</code>，以此类推。并且可以看出下标和跳转分支地址的对应关系，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>下标</th>
+<th>跳转分支地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>400f7c</td>
+</tr>
+<tr>
+<td>1</td>
+<td>400fb9</td>
+</tr>
+<tr>
+<td>2</td>
+<td>400f83</td>
+</tr>
+<tr>
+<td>3</td>
+<td>400f8a</td>
+</tr>
+<tr>
+<td>4</td>
+<td>400f91</td>
+</tr>
+<tr>
+<td>5</td>
+<td>400f98</td>
+</tr>
+<tr>
+<td>6</td>
+<td>400f9f</td>
+</tr>
+<tr>
+<td>7</td>
+<td>400fa6</td>
+</tr>
+</tbody>
+</table>
+<p>这里似乎设了个小坑，因为乍眼一看跳转分支地址的顺序差不多就是在汇编代码中的出现顺序，但唯独<code>case 1</code>是个例外。</p>
+<p>进一步地，可以用 GDB 调试验证一下：</p>
+<div class="highlight"><pre><span></span><code><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>b<span class="w"> </span>*0x400f75
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>r
+...
+<span class="m">0</span><span class="w">  </span><span class="m">207</span><span class="w"> </span><span class="c1">#测试输入</span>
+
+Breakpoint<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>0x0000000000400f75<span class="w"> </span><span class="k">in</span><span class="w"> </span>phase_3<span class="w"> </span><span class="o">()</span>
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>display<span class="w"> </span>/i<span class="w"> </span><span class="nv">$pc</span>
+<span class="o">=</span>&gt;<span class="w"> </span>0x400f75<span class="w"> </span>&lt;phase_3+50&gt;:<span class="w">   </span>jmp<span class="w">    </span>*0x402470<span class="o">(</span>,%rax,8<span class="o">)</span>
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>si
+0x400f7c<span class="w"> </span><span class="k">in</span><span class="w"> </span>phase_3<span class="o">()</span>
+<span class="m">1</span>:<span class="w"> </span>x/i<span class="w"> </span><span class="nv">$pc</span>
+<span class="o">=</span>&gt;<span class="w"> </span>0x400f7c<span class="w"> </span>&lt;phase_3+57&gt;:<span class="w">   </span>mov<span class="w"> </span><span class="nv">$0</span>xcf,%eax<span class="w"> </span><span class="c1">#eax=207</span>
+</code></pre></div>
+<p>由上述结果可以确定，<code>0  207</code>这个输入是正确的。</p>
+<p>我们之前说只要知道跳转到了哪里、确定了<code>%eax</code>的值，就能知道第二个整数应该输入什么。而跳转到哪里实际上是由第一个整数决定的，也就是说以下<strong>每行输入其实都是答案</strong>：</p>
+<div class="highlight"><pre><span></span><code>0 207
+1 311
+2 707
+3 256
+4 389
+5 206
+6 682
+7 327
+</code></pre></div>
+<h3 id="_5">源码还原</h3>
+<p>我们可以进一步还原出<code>phase_3</code>的源码大致结构：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">phase_3</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">input</span><span class="p">){</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">num1</span><span class="p">,</span><span class="w"> </span><span class="n">num2</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sscanf</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%d %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">num1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">num2</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">){</span>
+<span class="w">        </span><span class="n">explode_bomb</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">num1</span><span class="o">&gt;</span><span class="mi">7</span><span class="p">){</span>
+<span class="w">        </span><span class="n">explode_bomb</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="k">switch</span><span class="p">(</span><span class="n">num1</span><span class="p">)</span><span class="o">:</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">207</span><span class="p">;</span><span class="w"> </span><span class="c1">// mov    $0xcf,%eax</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="c1">// 注意跳转到了400fb9处的代码</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">311</span><span class="p">;</span><span class="w"> </span><span class="c1">// mov    $0x137,%eax</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">707</span><span class="p">;</span><span class="w"> </span><span class="c1">// mov    $0x2c3,%eax</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span><span class="w"> </span><span class="c1">// mov    $0x100,%eax</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="mi">4</span><span class="p">:</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">389</span><span class="p">;</span><span class="w"> </span><span class="c1">// mov    $0x185,%eax</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="mi">5</span><span class="p">:</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">206</span><span class="p">;</span><span class="w"> </span><span class="c1">// mov    $0xce,%eax</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="mi">6</span><span class="p">:</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">682</span><span class="p">;</span><span class="w"> </span><span class="c1">// mov    $0x2aa,%eax</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="mi">7</span><span class="p">:</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">327</span><span class="p">;</span><span class="w"> </span><span class="c1">// mov    $0x147,%eax</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">num2</span><span class="p">){</span><span class="w"> </span>
+<span class="w">        </span><span class="n">explode_bomb</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 
 
