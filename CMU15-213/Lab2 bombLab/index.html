@@ -710,6 +710,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#phase-4" class="md-nav__link">
+    Phase 4
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5" class="md-nav__link">
+    Phase 5
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -937,12 +951,61 @@
       
       
         <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-          Stanford CS149 并行计算
+          CMU 15-445 数据库系统
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          CMU 15-445 数据库系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CMU15-445/课程简介.md" class="md-nav__link">
+        课程简介
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          Stanford CS149 并行计算
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           Stanford CS149 并行计算
         </label>
@@ -995,17 +1058,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
       
       
       
-        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
           MIT 6.824 分布式系统
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_8">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
           MIT 6.824 分布式系统
         </label>
@@ -1018,55 +1081,6 @@
   
     <li class="md-nav__item">
       <a href="../../MIT6.824/%E8%AF%BE%E7%A8%8B%E7%AE%80%E4%BB%8B/" class="md-nav__link">
-        课程简介
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
-      
-      
-      
-        <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
-          CMU 15-445 数据库系统
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_9">
-          <span class="md-nav__icon md-icon"></span>
-          CMU 15-445 数据库系统
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../CMU15-445/课程简介.md" class="md-nav__link">
         课程简介
       </a>
     </li>
@@ -1175,6 +1189,20 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-4" class="md-nav__link">
+    Phase 4
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5" class="md-nav__link">
+    Phase 5
+  </a>
   
 </li>
       
@@ -1482,6 +1510,57 @@ Breakpoint<span class="w"> </span><span class="m">1</span>,<span class="w"> </sp
 <span class="w">    </span><span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
+<h2 id="phase-4">Phase 4</h2>
+<p>这一关考的是递归的机器级表示，但拆弹过程本身比前两关还简单，可以直接从汇编代码里瞪出来：</p>
+<div class="highlight"><pre><span></span><code>000000000040100c &lt;phase_4&gt;:
+  ...
+  40102c:   75 07                   jne    401035 &lt;phase_4+0x29&gt; ; 输入两个整数，否则爆炸
+  40102e:   83 7c 24 08 0e          cmpl   $0xe,0x8(%rsp) 
+  401033:   76 05                   jbe    40103a &lt;phase_4+0x2e&gt; ; 第一个数要≤14，否则爆炸
+  401035:   e8 00 04 00 00          call   40143a &lt;explode_bomb&gt;
+  40103a:   ba 0e 00 00 00          mov    $0xe,%edx ;参数3为14
+  40103f:   be 00 00 00 00          mov    $0x0,%esi ;参数2为0
+  401044:   8b 7c 24 08             mov    0x8(%rsp),%edi ;参数1为输入的第一个数
+  401048:   e8 81 ff ff ff          call   400fce &lt;func4&gt;
+  40104d:   85 c0                   test   %eax,%eax
+  40104f:   75 07                   jne    401058 &lt;phase_4+0x4c&gt; ;eax要为0，否则爆炸
+  401051:   83 7c 24 0c 00          cmpl   $0x0,0xc(%rsp) ;输入的第二个数要为0，否则爆炸
+  401056:   74 05                   je     40105d &lt;phase_4+0x51&gt;
+  401058:   e8 dd 03 00 00          call   40143a &lt;explode_bomb&gt;
+  40105d:   48 83 c4 18             add    $0x18,%rsp
+  401061:   c3                      ret    
+</code></pre></div>
+<p>如注释，可以从<code>phase_4</code>确定<code>num2</code>应为0.</p>
+<p>对于<code>fun4</code>：</p>
+<div class="highlight"><pre><span></span><code>0000000000400fce &lt;func4&gt;:
+  400fce:   48 83 ec 08             sub    $0x8,%rsp
+  400fd2:   89 d0                   mov    %edx,%eax ;eax=14
+  400fd4:   29 f0                   sub    %esi,%eax ;eax=14
+  400fd6:   89 c1                   mov    %eax,%ecx ;ecx=14
+  400fd8:   c1 e9 1f                shr    $0x1f,%ecx ;右移31位，相当于取ecx的符号位，为0
+  400fdb:   01 c8                   add    %ecx,%eax ;eax=14
+  400fdd:   d1 f8                   sar    %eax ;右移1位，相当于除以2，eax=7
+  400fdf:   8d 0c 30                lea    (%rax,%rsi,1),%ecx ;ecx=7+esi=7
+  400fe2:   39 f9                   cmp    %edi,%ecx ;如果ecx&gt;=edi，跳转到400ff2，edi为输入的第一个数
+  400fe4:   7e 0c                   jle    400ff2 &lt;func4+0x24&gt;
+  400fe6:   8d 51 ff                lea    -0x1(%rcx),%edx ;如果ecx&lt;edi，edx=ecx-1=6
+  400fe9:   e8 e0 ff ff ff          call   400fce &lt;func4&gt; ;递归
+  400fee:   01 c0                   add    %eax,%eax 
+  400ff0:   eb 15                   jmp    401007 &lt;func4+0x39&gt;
+  400ff2:   b8 00 00 00 00          mov    $0x0,%eax ;eax=0
+  400ff7:   39 f9                   cmp    %edi,%ecx ;如果ecx&lt;=edi, 跳转到401007
+  400ff9:   7d 0c                   jge    401007 &lt;func4+0x39&gt;
+  400ffb:   8d 71 01                lea    0x1(%rcx),%esi
+  400ffe:   e8 cb ff ff ff          call   400fce &lt;func4&gt;
+  401003:   8d 44 00 01             lea    0x1(%rax,%rax,1),%eax
+  401007:   48 83 c4 08             add    $0x8,%rsp ;若ecx=edi=7，会在这里返回
+  40100b:   c3                      ret    
+</code></pre></div>
+<p>若<code>ecx==edi</code>成立，则代码从<code>400fe2</code>开始的跳转顺序为：<code>400fe2</code>→<code>400ff2</code>（<code>%eax=0</code>）→<code>401007</code>→<code>fun4</code>安全返回。又由<code>400fdf</code>可知，<code>ecx</code>为 7 。又<code>edi</code>来自于输入的第一个整数，因此以下答案是可以安全拆弹的：</p>
+<div class="highlight"><pre><span></span><code>7 0
+</code></pre></div>
+<p>进一步的递归分析有待填坑。</p>
+<h2 id="phase-5">Phase 5</h2>
 
 
 
