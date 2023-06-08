@@ -113,6 +113,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#1" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -506,9 +511,65 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          1.6 结构体、方法与接口
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         1.6 结构体、方法与接口
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 结构体与方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 接口
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 接口">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    接口的使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    空接口
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1212,6 +1273,48 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 结构体与方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 接口
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 接口">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    接口的使用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    空接口
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1227,7 +1330,133 @@
 
   <h1>1.6 结构体、方法与接口</h1>
 
+<h2 id="1">1. 结构体与方法</h2>
+<p>Go 语言中没有”类“的概念，但可以通过结构体和方法进行类似的实现。</p>
+<ul>
+<li>
+<p>定义结构体：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Student</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">name</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">  </span><span class="nx">age</span><span class="w"> </span><span class="kt">int</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>若同种类型只有一个字段，则该字段也可以省略字段名，称为<strong>匿名字段</strong>。因此也可以进行以下定义：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Student</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">string</span>
+<span class="w">  </span><span class="kt">int</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>为结构体<code>Student</code>实现<code>Hello</code>方法：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">stu</span><span class="w"> </span><span class="o">*</span><span class="nx">Student</span><span class="p">)</span><span class="w"> </span><span class="nx">hello</span><span class="p">(</span><span class="nx">person</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="p">{</span><span class="w"> </span><span class="c1">// 向 person 打招呼</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;Hello %s, I am %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">person</span><span class="p">,</span><span class="w"> </span><span class="nx">stu</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>声明并初始化一个<code>Student</code>变量：</p>
+<div class="highlight"><pre><span></span><code><span class="nx">stu</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">Student</span><span class="p">{</span>
+<span class="w">  </span><span class="nx">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Tom&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>未显式赋值的字段会被赋为默认值，如<code>stu</code>的<code>age</code>会默认为 0 .</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>使用<code>new</code>实例化一个<code>Student</code>变量：</p>
+<div class="highlight"><pre><span></span><code><span class="nx">stu2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">Student</span><span class="p">)</span><span class="w"> </span><span class="c1">// name 字段默认为空字符串&quot;&quot;，age 字段默认为 0</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">stu2</span><span class="p">.</span><span class="nx">hello</span><span class="p">(</span><span class="s">&quot;Alice&quot;</span><span class="p">))</span><span class="w"> </span><span class="c1">// Hello Alice, I am  </span>
+</code></pre></div>
+</li>
+</ul>
+<h2 id="2">2. 接口</h2>
+<h3 id="_1">接口的使用</h3>
+<p><strong>接口</strong>是包含一个或多个方法的集合。接口是一种类型，但不能被实例化。一个类型可以实现多个接口。</p>
+<p>例如，现有两个类型<code>Dog</code>和<code>Cat</code>，它们都有方法<code>say()</code>。显然这两个类型是有共性的，即都可以发出叫声。</p>
+<p>接口中的方法必须全部实现，不能部分实现。</p>
+<ul>
+<li>
+<p>通过关键字<code>interface</code>，定义一个<code>Sayer</code>接口：</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Sayer 接口</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Sayer</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">say</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>定义结构体<code>Dog</code>和<code>Cat</code>：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Cat</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span>
+</code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>分别给<code>Dog</code>和<code>Cat</code>实现<code>Sayer</code>接口中的全部方法：</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Dog实现了Sayer接口</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="nx">Dog</span><span class="p">)</span><span class="w"> </span><span class="nx">say</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;汪汪汪&quot;</span><span class="p">)</span>
+<span class="p">}</span>
 
+<span class="c1">// Cat实现了Sayer接口</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">Cat</span><span class="p">)</span><span class="w"> </span><span class="nx">say</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;喵喵喵&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
+<p>接口不只是”将一些方法打包在一起要求类型全部实现“，还能实现类似于 C++ 中多态的效果：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="nx">Sayer</span><span class="w"> </span><span class="c1">// 声明一个Sayer类型的变量x，注意这不是实例化</span>
+<span class="nx">a</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Cat</span><span class="p">{}</span>
+<span class="nx">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Dog</span><span class="p">{}</span>
+<span class="nx">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="c1">// 将Cat实例直接赋值给a</span>
+<span class="nx">x</span><span class="p">.</span><span class="nx">say</span><span class="p">()</span><span class="w"> </span><span class="c1">//喵喵喵</span>
+<span class="nx">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="c1">// 将Dog实例世界赋值给b</span>
+<span class="nx">x</span><span class="p">.</span><span class="nx">say</span><span class="p">()</span><span class="w"> </span><span class="c1">//汪汪汪</span>
+</code></pre></div>
+<h3 id="_2">空接口</h3>
+<p>空接口是没有定义任何方法的接口。这也意味着任何类型都实现了空接口，即任何类型的实例都可以转换为空接口类型。</p>
+<ul>
+<li>
+<p>使用空接口实现能接收任意类型参数的函数</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">show</span><span class="p">(</span><span class="nx">a</span><span class="w"> </span><span class="kd">interface</span><span class="p">{}){</span><span class="w"> </span><span class="c1">// 参数可以是int、string、自定义类型等等</span>
+<span class="w">  </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;type: %T value: %v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>使用空接口实现可以保存任意值（即值的类型可以是任意的）的字典：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">stuInfo</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})</span>
+<span class="nx">stuInfo</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;李白&quot;</span><span class="w"> </span><span class="c1">// string:string 的键值对</span>
+<span class="nx">stuInfo</span><span class="p">[</span><span class="s">&quot;age&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">18</span><span class="w"> </span><span class="c1">// string:int 的键值对</span>
+<span class="nx">stuInfo</span><span class="p">[</span><span class="s">&quot;married&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="c1">// string:bool 的键值对</span>
+</code></pre></div>
+</li>
+</ul>
+<ul>
+<li>
+<p>判断空接口中的值的类型，使用类型断言<code>空接口名.(类型)</code>。它将返回两个值，第一个为具体值，第二个为布尔值，表示断言是否成功：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="kd">interface</span><span class="p">{}</span>
+<span class="nx">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;hello&quot;</span>
+<span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">x</span><span class="p">.(</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="c1">// 判断x是否为string类型</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">ok</span><span class="p">{</span>
+<span class="w">  </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span><span class="w"> </span><span class="c1">// 打印hello</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;类型断言失败&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
 
 
 
